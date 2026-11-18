@@ -1,0 +1,13 @@
+@using QuanLyHomestay.UI.Models
+@{ ViewData["Title"] = "Quản lý đặt phòng"; var bookings = ViewBag.Bookings as List<BookingViewModel> ?? new(); var rooms = ViewBag.Rooms as List<RoomViewModel> ?? new(); var customers = ViewBag.Customers as List<CustomerViewModel> ?? new(); }
+<section class="panel"><h2>Tạo đặt phòng</h2>
+@if (!rooms.Any() || !customers.Any()) { <p class="empty">Cần có phòng trống và khách hàng trước khi đặt phòng.</p> } else {
+<form asp-action="AddBooking" method="post" class="form-grid">
+<label>Khách hàng<select name="CustomerId">@foreach (var c in customers) { <option value="@c.Id">@c.FullName</option> }</select></label>
+<label>Phòng<select name="RoomId">@foreach (var r in rooms) { <option value="@r.Id">@r.Name - @r.PricePerNight.ToString("N0") đ/đêm</option> }</select></label>
+<label>Ngày nhận<input type="date" name="CheckIn" required /></label><label>Ngày trả<input type="date" name="CheckOut" required /></label>
+<label>Số khách<input type="number" name="Guests" value="1" min="1" required /></label><button>+ Tạo đặt phòng</button></form> }</section>
+<section class="panel"><h2>Danh sách đặt phòng</h2>@if (!bookings.Any()) { <p class="empty">Chưa có đặt phòng.</p> } else {
+<div class="table-wrap"><table><tr><th>Khách hàng</th><th>Phòng</th><th>Thời gian</th><th>Số khách</th><th>Tổng tiền</th><th>Trạng thái</th><th>Cập nhật</th></tr>
+@foreach (var b in bookings) { <tr><td>@b.Customer?.FullName</td><td>@b.Room?.Name</td><td>@b.CheckIn.ToString("dd/MM/yyyy") - @b.CheckOut.ToString("dd/MM/yyyy")</td><td>@b.Guests</td><td>@b.TotalPrice.ToString("N0") đ</td><td>@b.Status</td><td><form asp-action="UpdateStatus" method="post" class="inline"><input type="hidden" name="id" value="@b.Id" /><select name="status">@foreach (var s in new[] { "Đã đặt", "Đang ở", "Đã trả phòng", "Đã hủy" }) { <option selected="@(b.Status == s)" value="@s">@s</option> }</select><button class="small">Lưu</button></form></td></tr> }
+</table></div> }</section>

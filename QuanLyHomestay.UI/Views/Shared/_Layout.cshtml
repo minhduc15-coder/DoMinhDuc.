@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="vi"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>@ViewData["Title"] - StayManager</title><link rel="stylesheet" href="~/css/site.css" /></head>
+<body><aside class="sidebar"><div class="brand">⌂ StayManager</div><nav>
+<a asp-action="Index">Tổng quan</a><a asp-action="Rooms">Quản lý phòng</a>
+<a asp-action="Customers">Khách hàng</a><a asp-action="Bookings">Đặt phòng</a>
+</nav><small>Hệ thống quản lý homestay</small></aside>
+<main class="main"><header><div><span class="eyebrow">HỆ THỐNG QUẢN LÝ</span><h1>@ViewData["Title"]</h1></div><span class="user">Quản trị viên</span></header>
+@if (TempData["Message"] != null) { <div class="notice">@TempData["Message"]</div> }
+@RenderBody()<footer>StayManager · Đồ án quản lý homestay</footer></main>
+</body></html>

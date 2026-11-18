@@ -1,0 +1,14 @@
+@using QuanLyHomestay.UI.Models
+@{ ViewData["Title"] = "Tổng quan"; var latest = ViewBag.Latest as List<BookingViewModel> ?? new(); }
+<section class="stats">
+<div class="stat"><span>Tổng số phòng</span><strong>@ViewBag.RoomCount</strong></div>
+<div class="stat"><span>Phòng đang trống</span><strong>@ViewBag.Available</strong></div>
+<div class="stat"><span>Khách hàng</span><strong>@ViewBag.CustomerCount</strong></div>
+<div class="stat"><span>Lượt đặt phòng</span><strong>@ViewBag.BookingCount</strong></div>
+</section>
+<section class="panel"><h2>Doanh thu đã thu</h2><strong class="revenue">@(((int)ViewBag.Revenue).ToString("N0")) đ</strong></section>
+<section class="panel"><h2>Đặt phòng gần đây</h2>
+@if (latest.Count == 0) { <p class="empty">Chưa có lượt đặt phòng nào.</p> } else {
+<div class="table-wrap"><table><tr><th>Khách hàng</th><th>Phòng</th><th>Nhận phòng</th><th>Trả phòng</th><th>Trạng thái</th></tr>
+@foreach (var b in latest) { <tr><td>@b.Customer?.FullName</td><td>@b.Room?.Name</td><td>@b.CheckIn.ToString("dd/MM/yyyy")</td><td>@b.CheckOut.ToString("dd/MM/yyyy")</td><td>@b.Status</td></tr> }
+</table></div> }</section>

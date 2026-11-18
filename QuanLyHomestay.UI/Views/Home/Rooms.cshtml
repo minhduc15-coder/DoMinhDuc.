@@ -1,0 +1,10 @@
+@using QuanLyHomestay.UI.Models
+@{ ViewData["Title"] = "Quản lý phòng"; var rooms = ViewBag.Rooms as List<RoomViewModel> ?? new(); }
+<section class="panel"><h2>Thêm phòng mới</h2><form asp-action="AddRoom" method="post" class="form-grid">
+<label>Tên phòng<input name="Name" required placeholder="P103" /></label>
+<label>Loại phòng<input name="RoomType" required placeholder="Phòng đơn, phòng đôi..." /></label>
+<label>Giá mỗi đêm (VNĐ)<input name="PricePerNight" type="number" min="0" required /></label><button>+ Thêm phòng</button></form></section>
+<section class="panel"><h2>Danh sách phòng</h2>@if (!rooms.Any()) { <p class="empty">Chưa có phòng.</p> } else {
+<div class="table-wrap"><table><tr><th>Tên phòng</th><th>Loại phòng</th><th>Giá/đêm</th><th>Trạng thái</th><th></th></tr>
+@foreach (var r in rooms) { <tr><td>@r.Name</td><td>@r.RoomType</td><td>@r.PricePerNight.ToString("N0") đ</td><td>@r.Status</td><td><form asp-action="DeleteRoom" method="post"><input type="hidden" name="id" value="@r.Id" /><button class="danger">Xóa</button></form></td></tr> }
+</table></div> }</section>

@@ -1,0 +1,8 @@
+@using QuanLyHomestay.UI.Models
+@{ ViewData["Title"] = "Khách hàng"; var customers = ViewBag.Customers as List<CustomerViewModel> ?? new(); }
+<section class="panel"><h2>Thêm khách hàng</h2><form asp-action="AddCustomer" method="post" class="form-grid">
+<label>Họ và tên<input name="FullName" required /></label><label>Số điện thoại<input name="Phone" required /></label>
+<label>Email<input name="Email" type="email" /></label><button>+ Thêm khách hàng</button></form></section>
+<section class="panel"><h2>Danh sách khách hàng</h2>@if (!customers.Any()) { <p class="empty">Chưa có khách hàng.</p> } else {
+<div class="table-wrap"><table><tr><th>Họ tên</th><th>Số điện thoại</th><th>Email</th></tr>
+@foreach (var c in customers) { <tr><td>@c.FullName</td><td>@c.Phone</td><td>@c.Email</td></tr> }</table></div> }</section>
